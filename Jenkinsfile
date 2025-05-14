@@ -4,44 +4,56 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Step 1: Cloning code from GitHub...'
-                sh 'pwd'
+                echo 'Stage 1: Cloning repository and installing dependencies'
+                git branch: 'main', url: 'https://github.com/wenyupeng/evolze.git'
+                echo 'npm install'
+                echo 'npm run build'
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Step 2: Running unit and integration tests...'
+                echo 'Stage 2: Running unit and integration tests'
+                echo 'npm test'
             }
         }
 
         stage('Code Analysis') {
             steps {
-                echo 'Step 3: Running static code analysis...'
+                echo 'Stage 3: Performing static code analysis with ESLint'
+                echo 'npx eslint .'
             }
         }
 
         stage('Security Scan') {
             steps {
-                echo 'Step 4: Running security scan...'
+                echo 'Stage 4: Running security scan with npm audit'
+                echo 'npm audit --audit-level=high'
             }
         }
 
         stage('Deploy to Staging') {
             steps {
-                echo 'Step 5: Deploying to staging environment...'
+                echo 'Stage 5: Building Docker image and pushing to staging environment'
+                echo 'docker build -t myapp:staging .'
+                echo 'docker tag myapp:staging chrisyp/myapp:staging'
+                echo 'docker push chrisyp/myapp:staging'
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Step 6: Running integration tests on staging...'
+                echo 'Stage 6: Running integration tests against staging environment'
+                echo 'npx cypress run --env baseUrl=https://staging.example.com'
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                echo 'Step 7: Deploying to production environment...'
+                echo 'Stage 7: Building and deploying Docker image to production'
+                echo 'docker build -t myapp:production .'
+                echo 'docker tag myapp:production chrisyp/myapp:production'
+                echo 'docker push chrisyp/myapp:production'
             }
         }
     }
