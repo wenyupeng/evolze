@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Stage 0: Building the application'
-                echo 'release: 1.0.1'
+                echo 'release: 1.0.2'
                 echo 'Stage 1: Cloning repository and installing dependencies'
                 git branch: 'main', url: 'https://github.com/wenyupeng/evolze.git'
                 echo 'npm install'
